@@ -1,5 +1,5 @@
 const { nanoid } = require('nanoid');
-const notes = require('./node');
+const notes = require('./notes');
 
 const addNoteHandler = (request, h) => {
   const { title, tags, body } = request.payload;
@@ -14,7 +14,7 @@ const addNoteHandler = (request, h) => {
 
   notes.push(newNote);
 
-  const isSuccess = notes.filter((note) => notes.id === id).length > 0;
+  const isSuccess = notes.filter((note) => note.id === id).length > 0;
 
   if (isSuccess) {
     const response = h.response({
@@ -37,4 +37,11 @@ const addNoteHandler = (request, h) => {
   return response;
 };
 
-module.exports = { addNoteHandler };
+const getAllNotesHandler = () => ({
+  status: 'success',
+  data: {
+    notes,
+  },
+});
+
+module.exports = { addNoteHandler, getAllNotesHandler };
